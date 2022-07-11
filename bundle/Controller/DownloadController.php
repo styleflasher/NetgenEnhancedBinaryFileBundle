@@ -2,10 +2,10 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Controller;
 
-use eZ\Bundle\EzPublishCoreBundle\Controller;
-use eZ\Bundle\EzPublishIOBundle\BinaryStreamResponse;
-use eZ\Publish\Core\Event\Repository;
-use eZ\Publish\Core\IO\IOServiceInterface;
+use Ibexa\Bundle\Core\Controller;
+use Ibexa\Bundle\IO\BinaryStreamResponse;
+use Ibexa\Core\IO\IOServiceInterface;
+use Ibexa\Core\Repository\SiteAccessAware\Repository;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollection;
 use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
@@ -35,8 +35,8 @@ class DownloadController extends Controller
     /**
      * @param int $infocollectionAttributeId
      *
-     * @throws \eZ\Publish\Core\Base\Exceptions\InvalidArgumentValue
-     * @throws \eZ\Publish\Core\Base\Exceptions\NotFoundException
+     * @throws \Ibexa\Core\Base\Exceptions\InvalidArgumentValue
+     * @throws \Ibexa\Core\Base\Exceptions\NotFoundException
      *
      * @return BinaryStreamResponse
      */
@@ -79,7 +79,8 @@ class DownloadController extends Controller
 
         $originalFilename = html_entity_decode($originalFilenameNodes->length ? $originalFilenameNodes->item(0)->textContent : $fileName);
 
-        $binaryFile = $this->ioService->loadBinaryFile('collected' . \DIRECTORY_SEPARATOR . $fileName);
+        $this->ioService->setPrefix(null);
+        $binaryFile = $this->ioService->loadBinaryFile('original' . \DIRECTORY_SEPARATOR . 'collected' . \DIRECTORY_SEPARATOR . $fileName);
 
         $response = new BinaryStreamResponse($binaryFile, $this->ioService);
         $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $originalFilename);

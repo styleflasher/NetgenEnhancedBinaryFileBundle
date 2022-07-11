@@ -2,6 +2,6 @@ services:
     Netgen\Bundle\EnhancedBinaryFileBundle\FieldHandler\EnhancedBinaryFileHandler:
         autowire: true
         arguments:
-            - "@ezpublish.core.io.service"
+            $ioService: '@Ibexa\Core\FieldType\Image\IO\Legacy'
         tags:
             - { name: netgen_information_collection.field_handler.custom }

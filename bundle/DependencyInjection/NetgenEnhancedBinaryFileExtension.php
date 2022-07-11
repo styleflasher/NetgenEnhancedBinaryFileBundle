@@ -27,14 +27,14 @@ class NetgenEnhancedBinaryFileExtension extends Extension implements PrependExte
         $container->prependExtensionConfig('twig', ['paths' => [
             $path => 'NetgenEnhancedBinaryFileBundle'
         ]]);
-        
+
         $fileName = 'ez_field_templates.yml';
         $configFile = __DIR__ . '/../Resources/config/' . $fileName;
         $config = Yaml::parse(file_get_contents($configFile));
 
         $container->prependExtensionConfig('ezpublish', $config);
         $container->addResource(new FileResource($configFile));
-        
+
     }
 
     /**
@@ -46,15 +46,8 @@ class NetgenEnhancedBinaryFileExtension extends Extension implements PrependExte
         $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        if (class_exists(\eZ\Publish\SPI\FieldType\GatewayBasedStorage::class)) {
-            $loader->load('fieldtypes_after_611.yml');
-        } else {
-            $loader->load('fieldtypes_before_611.yml');
-        }
 
-
-        $loader->load('repository_forms.yml');
-
+        $loader->load('fieldtype_form_mappers.yml');
         $loader->load('fieldtypes.yml');
         $loader->load('field_type_handlers.yml');
         $loader->load('storage_engines.yml');

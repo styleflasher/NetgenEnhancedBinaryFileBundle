@@ -2,12 +2,12 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Tests\Core\FieldType\Persistence\Legacy\Content\FieldValue\Converter;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use eZ\Publish\Core\Persistence\Legacy\Content\StorageFieldDefinition;
-use eZ\Publish\Core\Persistence\Legacy\Content\StorageFieldValue;
-use eZ\Publish\SPI\Persistence\Content\FieldTypeConstraints;
-use eZ\Publish\SPI\Persistence\Content\FieldValue;
-use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\Persistence\Legacy\Content\StorageFieldDefinition;
+use Ibexa\Core\Persistence\Legacy\Content\StorageFieldValue;
+use Ibexa\Contracts\Core\Persistence\Content\FieldTypeConstraints;
+use Ibexa\Contracts\Core\Persistence\Content\FieldValue;
+use Ibexa\Contracts\Core\Persistence\Content\Type\FieldDefinition;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Core\Persistence\Legacy\Content\FieldValue\Converter\Converter;
 use PHPUnit\Framework\TestCase;
 
@@ -31,7 +31,7 @@ class ConverterTest extends TestCase
 
     public function testInstanceOfConverterInterface()
     {
-        $this->assertInstanceOf(\eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter::class, $this->converter);
+        $this->assertInstanceOf(\Ibexa\Core\Persistence\Legacy\Content\FieldValue\Converter::class, $this->converter);
     }
 
     public function testToStorageValueShouldDoNothing()

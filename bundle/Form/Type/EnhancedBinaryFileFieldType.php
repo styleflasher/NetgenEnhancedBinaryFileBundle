@@ -2,8 +2,7 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Form\Type;
 
-use EzSystems\EzPlatformContentForms\ConfigResolver\MaxUploadSize;
-use EzSystems\EzPlatformContentForms\Form\Type\FieldType\BinaryBaseFieldType;
+use Ibexa\ContentForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

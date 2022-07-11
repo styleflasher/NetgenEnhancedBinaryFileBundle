@@ -1,6 +1,6 @@
 services:
     ezpublish.enhancedezbinaryfile.external_storage_handler:
-        class: eZ\Publish\Core\FieldType\BinaryBase\BinaryBaseStorage
+        class: Ibexa\Core\FieldType\BinaryBase\BinaryBaseStorage
         arguments:
             - "@ezpublish.fieldType.ezbinaryfile.storage_gateway"
             - "@ezpublish.fieldType.ezbinaryfile.io_service"

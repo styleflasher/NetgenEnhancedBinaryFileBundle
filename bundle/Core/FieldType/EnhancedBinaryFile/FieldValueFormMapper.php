@@ -2,11 +2,11 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile;
 
-use eZ\Publish\API\Repository\FieldTypeService;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use EzSystems\EzPlatformContentForms\Data\Content\FieldData;
-use EzSystems\EzPlatformContentForms\FieldType\DataTransformer\BinaryFileValueTransformer;
-use EzSystems\EzPlatformContentForms\FieldType\Mapper\BinaryFileFormMapper;
+use Ibexa\Contracts\Core\Repository\FieldTypeService;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Contracts\ContentForms\Data\Content\FieldData;
+use Ibexa\ContentForms\FieldType\DataTransformer\BinaryFileValueTransformer;
+use Ibexa\ContentForms\FieldType\Mapper\BinaryFileFormMapper;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\DataTransformer\EnhancedBinaryFileValueTransformer;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Form\Type\EnhancedBinaryFileFieldType;
 use Symfony\Component\Form\FormInterface;

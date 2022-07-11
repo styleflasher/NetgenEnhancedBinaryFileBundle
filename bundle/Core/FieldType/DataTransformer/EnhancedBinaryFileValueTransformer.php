@@ -2,10 +2,10 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\DataTransformer;
 
-use eZ\Publish\API\Repository\FieldType;
-use eZ\Publish\Core\FieldType\Value;
-use EzSystems\EzPlatformContentForms\FieldType\DataTransformer\AbstractBinaryBaseTransformer;
-use EzSystems\EzPlatformContentForms\FieldType\DataTransformer\BinaryFileValueTransformer;
+use Ibexa\Contracts\Core\Repository\FieldType;
+use Ibexa\Core\FieldType\Value;
+use Ibexa\ContentForms\FieldType\DataTransformer\AbstractBinaryBaseTransformer;
+use Ibexa\ContentForms\FieldType\DataTransformer\BinaryFileValueTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class EnhancedBinaryFileValueTransformer extends BinaryFileValueTransformer

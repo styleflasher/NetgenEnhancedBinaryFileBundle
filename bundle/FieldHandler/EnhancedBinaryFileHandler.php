@@ -3,9 +3,9 @@
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\FieldHandler;
 
 use DOMDocument;
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\FieldType\Value;
-use eZ\Publish\Core\IO\IOServiceInterface;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\FieldType\Value;
+use Ibexa\Core\IO\IOServiceInterface;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile\Value as EnhancedBinaryFileValue;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue as LegacyData;
@@ -15,16 +15,16 @@ class EnhancedBinaryFileHandler implements CustomLegacyFieldHandlerInterface
     /**
      * @var IOServiceInterface
      */
-    protected $IOService;
+    protected $ioService;
 
     /**
      * EnhancedBinaryFileHandler constructor.
      *
      * @param IOServiceInterface $IOService
      */
-    public function __construct(IOServiceInterface $IOService)
+    public function __construct(IOServiceInterface $ioService)
     {
-        $this->IOService = $IOService;
+        $this->ioService = $ioService;
     }
 
     /**
@@ -96,16 +96,18 @@ class EnhancedBinaryFileHandler implements CustomLegacyFieldHandlerInterface
      * @param EnhancedBinaryFileValue $value
      * @param string $storagePrefix
      *
-     * @return \eZ\Publish\Core\IO\Values\BinaryFile
+     * @return \Ibexa\Core\IO\Values\BinaryFile
      */
     protected function storeBinaryFileToPath(EnhancedBinaryFileValue $value, $storagePrefix = '/original/collected/')
     {
-        $binaryCreateStruct = $this->IOService
+        $binaryCreateStruct = $this->ioService
             ->newBinaryCreateStructFromLocalFile($value->inputUri);
         $encodedFilename = uniqid();
         $binaryCreateStruct->id = $storagePrefix . $encodedFilename;
 
-        $binaryFile = $this->IOService->createBinaryFile($binaryCreateStruct);
+        $this->ioService->setPrefix(null); // do not put the file into 'images' subfolder.
+
+        $binaryFile = $this->ioService->createBinaryFile($binaryCreateStruct);
 
         return $binaryFile;
     }

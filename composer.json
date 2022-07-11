@@ -6,7 +6,8 @@
         "netgen",
         "enhanced-binary-file-bundle",
         "ezpublish",
-        "ezplatform"
+        "ezplatform",
+        "ibexa"
     ],
     "homepage": "https://github.com/netgen/NetgenEnhancedBinaryFileBundle",
     "license": "GPL-2.0-only",
@@ -17,11 +18,10 @@
         }
     ],
     "require": {
-        "ezsystems/ezpublish-kernel": "*",
-        "netgen/information-collection-bundle": "^2.0"
+        "ibexa/core": "^4.0",
+        "netgen/information-collection-bundle": "^3.0"
     },
     "require-dev": {
-        "ezsystems/ezpublish-kernel": "~6.0",
         "phpunit/phpunit": "^5.7",
         "matthiasnoback/symfony-config-test": "~2.0",
         "matthiasnoback/symfony-dependency-injection-test": "~1.0",
@@ -55,7 +55,9 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.x-dev"
+            "dev-master": "2.x-dev",
+            "dev-feat-ibexa-3-compatibility": "3.x-dev",
+            "dev-feat-ibexa-4-compatibility": "4.x-dev"
         }
     }
 }

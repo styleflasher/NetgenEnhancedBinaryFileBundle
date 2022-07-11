@@ -2,8 +2,8 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Tests\Form\FieldTypeHandler;
 
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile\Value;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Form\FieldTypeHandler\EnhancedFile;
 use Netgen\Bundle\EzFormsBundle\Form\FieldTypeHandler;

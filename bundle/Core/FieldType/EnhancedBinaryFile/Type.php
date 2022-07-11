@@ -10,12 +10,14 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile;
 
-use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\Core\FieldType\BinaryFile\Type as BinaryFileType;
-use eZ\Publish\Core\FieldType\ValidationError;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use eZ\Publish\SPI\FieldType\Value as SPIValue;
-use eZ\Publish\SPI\IO\MimeTypeDetector;
+use Ibexa\Contracts\Core\FieldType\BinaryBase\RouteAwarePathGenerator;
+use Ibexa\Contracts\Core\IO\MimeTypeDetector;
+use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Core\FieldType\BinaryFile\Type as BinaryFileType;
+use Ibexa\Core\FieldType\ValidationError;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Contracts\Core\FieldType\Value as SPIValue;
+use Ibexa\Contracts\Core\IOMimeTypeDetector;
 
 class Type extends BinaryFileType
 {
@@ -36,30 +38,27 @@ class Type extends BinaryFileType
     ];
 
     /**
-     * @var \eZ\Publish\SPI\IO\MimeTypeDetector
+     * @var \Ibexa\Contracts\Core\IOMimeTypeDetector
      */
     protected $mimeTypeDetector;
 
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
      */
     protected $configResolver;
 
-    /**
-     * @param \eZ\Publish\SPI\IO\MimeTypeDetector $mimeTypeDetector
-     * @param \eZ\Publish\Core\MVC\ConfigResolverInterface $configResolver
-     */
-    public function __construct(MimeTypeDetector $mimeTypeDetector, ConfigResolverInterface $configResolver)
+    public function __construct(MimeTypeDetector $mimeTypeDetector, ConfigResolverInterface $configResolver, array $validators, ?RouteAwarePathGenerator $routeAwarePathGenerator = null)
     {
         $this->mimeTypeDetector = $mimeTypeDetector;
         $this->configResolver = $configResolver;
+        parent::__construct($validators, $routeAwarePathGenerator);
     }
 
     /**
      * Returns the fallback default value of field type when no such default
      * value is provided in the field definition in content types.
      *
-     * @return \eZ\Publish\Core\FieldType\BinaryFile\Value
+     * @return \Ibexa\Core\FieldType\BinaryFile\Value
      */
     public function getEmptyValue()
     {
@@ -80,12 +79,12 @@ class Type extends BinaryFileType
      * Validates a field based on the validators in the field definition.
      *
      *
-     * @param \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinition The field definition of the field
-     * @param \eZ\Publish\Core\FieldType\BinaryBase\Value $fieldValue The field value for which an action is performed
+     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition $fieldDefinition The field definition of the field
+     * @param \Ibexa\Core\FieldType\BinaryBase\Value $fieldValue The field value for which an action is performed
      *
-     * @throws \eZ\Publish\API\Repository\Exceptions\InvalidArgumentException
+     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\InvalidArgumentException
      *
-     * @return \eZ\Publish\SPI\FieldType\ValidationError[]
+     * @return \Ibexa\Contracts\Core\FieldType\ValidationError[]
      */
     public function validate(FieldDefinition $fieldDefinition, SPIValue $fieldValue)
     {
@@ -129,7 +128,7 @@ class Type extends BinaryFileType
      *
      * @param mixed $fieldSettings
      *
-     * @return \eZ\Publish\SPI\FieldType\ValidationError[]
+     * @return \Ibexa\Contracts\Core\FieldType\ValidationError[]
      */
     public function validateFieldSettings($fieldSettings)
     {
