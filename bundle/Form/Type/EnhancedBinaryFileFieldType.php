@@ -2,13 +2,14 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Form\Type;
 
+use Symfony\Component\Form\AbstractType;
 use Ibexa\ContentForms\ConfigResolver\MaxUploadSize;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class EnhancedBinaryFileFieldType extends \Symfony\Component\Form\AbstractType
+class EnhancedBinaryFileFieldType extends AbstractType
 {
     /** @var MaxUploadSize */
     private $maxUploadSize;

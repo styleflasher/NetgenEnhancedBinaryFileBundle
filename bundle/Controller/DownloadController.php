@@ -2,6 +2,11 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Controller;
 
+use Ibexa\Core\Base\Exceptions\InvalidArgumentValue;
+use Ibexa\Core\Base\Exceptions\NotFoundException;
+use InvalidArgumentException;
+use DOMDocument;
+use DOMXPath;
 use Ibexa\Bundle\Core\Controller;
 use Ibexa\Bundle\IO\BinaryStreamResponse;
 use Ibexa\Core\IO\IOServiceInterface;
@@ -11,6 +16,7 @@ use Netgen\InformationCollection\Doctrine\Entity\EzInfoCollectionAttribute;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionAttributeRepository;
 use Netgen\InformationCollection\Doctrine\Repository\EzInfoCollectionRepository;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class DownloadController extends Controller
@@ -35,18 +41,18 @@ class DownloadController extends Controller
     /**
      * @param int $infocollectionAttributeId
      *
-     * @throws \Ibexa\Core\Base\Exceptions\InvalidArgumentValue
-     * @throws \Ibexa\Core\Base\Exceptions\NotFoundException
-     *
+     * @throws InvalidArgumentValue
+     * @throws NotFoundException
      * @return BinaryStreamResponse
      */
+    #[Route(name: 'netgen_enhancedezbinaryfile.route.download_binary_file', path: '/netgen/enhancedezbinaryfile/download/{infocollectionAttributeId}', methods: ['GET'])]
     public function downloadCollectedEnhancedEzBinaryFileAction($infocollectionAttributeId)
     {
         /** @var EzInfoCollectionAttribute $infocollectionAttribute */
         $infocollectionAttribute = $this->infocollectionAttributeRepository->find($infocollectionAttributeId);
 
         if ($infocollectionAttribute === null) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 "Information collection attribute with id '#{$infocollectionAttributeId}'' could not be found"
             );
         }
@@ -62,14 +68,14 @@ class DownloadController extends Controller
         }
 
         $binaryFileXML = $infocollectionAttribute->getDataText();
-        $doc = new \DOMDocument('1.0', 'utf-8');
+        $doc = new DOMDocument('1.0', 'utf-8');
         $doc->loadXML($binaryFileXML);
 
-        $xpath = new \DOMXPath($doc);
+        $xpath = new DOMXPath($doc);
         $filePathNodes = $xpath->evaluate('/binaryfile-info/binaryfile-attributes/Filename');
         $originalFilenameNodes = $xpath->evaluate('/binaryfile-info/binaryfile-attributes/OriginalFilename');
         if (!$filePathNodes->length) {
-            throw new \InvalidArgumentException(
+            throw new InvalidArgumentException(
                 "Information collection attribute with id '#{$infocollectionAttributeId}'' could not be found"
             );
         }

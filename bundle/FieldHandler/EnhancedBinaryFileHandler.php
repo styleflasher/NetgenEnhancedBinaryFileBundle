@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\FieldHandler;
 
+use Ibexa\Core\IO\Values\BinaryFile;
 use DOMDocument;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use Ibexa\Core\FieldType\Value;
@@ -96,7 +97,7 @@ class EnhancedBinaryFileHandler implements CustomLegacyFieldHandlerInterface
      * @param EnhancedBinaryFileValue $value
      * @param string $storagePrefix
      *
-     * @return \Ibexa\Core\IO\Values\BinaryFile
+     * @return BinaryFile
      */
     protected function storeBinaryFileToPath(EnhancedBinaryFileValue $value, $storagePrefix = '/original/collected/')
     {

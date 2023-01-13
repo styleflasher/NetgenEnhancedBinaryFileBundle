@@ -10,6 +10,7 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile;
 
+use Ibexa\Contracts\Core\Repository\Exceptions\InvalidArgumentException;
 use Ibexa\Contracts\Core\FieldType\BinaryBase\RouteAwarePathGenerator;
 use Ibexa\Contracts\Core\IO\MimeTypeDetector;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
@@ -43,7 +44,7 @@ class Type extends BinaryFileType
     protected $mimeTypeDetector;
 
     /**
-     * @var \Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
+     * @var ConfigResolverInterface
      */
     protected $configResolver;
 
@@ -79,10 +80,10 @@ class Type extends BinaryFileType
      * Validates a field based on the validators in the field definition.
      *
      *
-     * @param \Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition $fieldDefinition The field definition of the field
+     * @param FieldDefinition $fieldDefinition The field definition of the field
      * @param \Ibexa\Core\FieldType\BinaryBase\Value $fieldValue The field value for which an action is performed
      *
-     * @throws \Ibexa\Contracts\Core\Repository\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @return \Ibexa\Contracts\Core\FieldType\ValidationError[]
      */
