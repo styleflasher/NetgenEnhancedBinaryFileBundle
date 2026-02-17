@@ -18,8 +18,8 @@
         }
     ],
     "require": {
-        "ibexa/core": "^4.0",
-        "netgen/information-collection-bundle": "^3.0"
+        "ibexa/core": "^5.0",
+        "netgen/information-collection-bundle": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7",
