@@ -2,21 +2,21 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Core\Persistence\Legacy\Content\FieldValue\Converter;
 
-use eZ\Publish\Core\FieldType\FieldSettings;
-use eZ\Publish\Core\Persistence\Legacy\Content\FieldValue\Converter as ConverterInterface;
-use eZ\Publish\Core\Persistence\Legacy\Content\StorageFieldDefinition;
-use eZ\Publish\Core\Persistence\Legacy\Content\StorageFieldValue;
-use eZ\Publish\SPI\Persistence\Content\FieldTypeConstraints;
-use eZ\Publish\SPI\Persistence\Content\FieldValue;
-use eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition;
+use Ibexa\Core\FieldType\FieldSettings;
+use Ibexa\Core\Persistence\Legacy\Content\FieldValue\Converter as ConverterInterface;
+use Ibexa\Core\Persistence\Legacy\Content\StorageFieldDefinition;
+use Ibexa\Core\Persistence\Legacy\Content\StorageFieldValue;
+use Ibexa\Contracts\Core\Persistence\Content\FieldTypeConstraints;
+use Ibexa\Contracts\Core\Persistence\Content\FieldValue;
+use Ibexa\Contracts\Core\Persistence\Content\Type\FieldDefinition;
 
 class Converter implements ConverterInterface
 {
     /**
      * Converts data from $value to $storageFieldValue.
      *
-     * @param \eZ\Publish\SPI\Persistence\Content\FieldValue $value
-     * @param \eZ\Publish\Core\Persistence\Legacy\Content\StorageFieldValue $storageFieldValue
+     * @param FieldValue $value
+     * @param StorageFieldValue $storageFieldValue
      */
     public function toStorageValue(FieldValue $value, StorageFieldValue $storageFieldValue)
     {
@@ -25,8 +25,8 @@ class Converter implements ConverterInterface
     /**
      * Converts data from $value to $fieldValue.
      *
-     * @param \eZ\Publish\Core\Persistence\Legacy\Content\StorageFieldValue $value
-     * @param \eZ\Publish\SPI\Persistence\Content\FieldValue $fieldValue
+     * @param StorageFieldValue $value
+     * @param FieldValue $fieldValue
      */
     public function toFieldValue(StorageFieldValue $value, FieldValue $fieldValue)
     {
@@ -35,8 +35,8 @@ class Converter implements ConverterInterface
     /**
      * Converts field definition data in $fieldDef into $storageFieldDef.
      *
-     * @param \eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition $fieldDef
-     * @param \eZ\Publish\Core\Persistence\Legacy\Content\StorageFieldDefinition $storageDef
+     * @param FieldDefinition $fieldDef
+     * @param StorageFieldDefinition $storageDef
      */
     public function toStorageFieldDefinition(FieldDefinition $fieldDef, StorageFieldDefinition $storageDef)
     {
@@ -54,8 +54,8 @@ class Converter implements ConverterInterface
     /**
      * Converts field definition data in $storageDef into $fieldDef.
      *
-     * @param \eZ\Publish\Core\Persistence\Legacy\Content\StorageFieldDefinition $storageDef
-     * @param \eZ\Publish\SPI\Persistence\Content\Type\FieldDefinition $fieldDef
+     * @param StorageFieldDefinition $storageDef
+     * @param FieldDefinition $fieldDef
      */
     public function toFieldDefinition(StorageFieldDefinition $storageDef, FieldDefinition $fieldDef)
     {

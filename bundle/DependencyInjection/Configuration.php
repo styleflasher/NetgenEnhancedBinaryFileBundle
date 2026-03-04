@@ -10,10 +10,10 @@ class Configuration implements ConfigurationInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('netgen_enhanced_ez_binary_file');
+        $treeBuilder = new TreeBuilder("netgen_enhanced_ez_binary_file");
+        $rootNode = $treeBuilder->getRootNode();
 
         return $treeBuilder;
     }

@@ -2,11 +2,13 @@
     "name": "netgen/enhanced-binary-file-bundle",
     "description": "Netgen Enhanced Binary File bundle for eZ Publish",
     "type": "ezplatform-bundle",
+    "version": "3.0.0-dev",
     "keywords": [
         "netgen",
         "enhanced-binary-file-bundle",
         "ezpublish",
-        "ezplatform"
+        "ezplatform",
+        "ibexa"
     ],
     "homepage": "https://github.com/netgen/NetgenEnhancedBinaryFileBundle",
     "license": "GPL-2.0-only",
@@ -17,11 +19,10 @@
         }
     ],
     "require": {
-        "ezsystems/ezpublish-kernel": "*",
-        "netgen/information-collection-bundle": "^1.1"
+        "ibexa/core": "^5.0",
+        "netgen/information-collection-bundle": "*"
     },
     "require-dev": {
-        "ezsystems/ezpublish-kernel": "~6.0",
         "phpunit/phpunit": "^5.7",
         "matthiasnoback/symfony-config-test": "~2.0",
         "matthiasnoback/symfony-dependency-injection-test": "~1.0",
@@ -55,7 +56,9 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.x-dev"
+            "dev-master": "2.x-dev",
+            "dev-feat-ibexa-3-compatibility": "3.x-dev",
+            "dev-feat-ibexa-4-compatibility": "4.x-dev"
         }
     }
 }

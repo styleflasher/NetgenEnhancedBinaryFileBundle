@@ -2,6 +2,6 @@ services:
     netgen.ezforms.form.fieldtype_handler.enhancedezbinaryfile:
         class: Netgen\Bundle\EnhancedBinaryFileBundle\Form\FieldTypeHandler\EnhancedFile
         arguments:
-            - "@ezpublish.config.resolver"
+            - "@ibexa.config.resolver"
         tags:
             - { name: netgen.ezforms.form.fieldtype_handler, alias: enhancedezbinaryfile }

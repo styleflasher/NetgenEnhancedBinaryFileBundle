@@ -1,14 +1,27 @@
 services:
-    ezpublish.fieldType.enhancedezbinaryfile:
-        class: Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile\Type
-        parent: ezpublish.fieldType
+    _defaults:
+        autowire: true
+
+    Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile\Type:
         arguments:
-            - "@ezpublish.core.io.mimetypedetector"
-            - "@ezpublish.config.resolver"
+            - '@Ibexa\Core\IO\MimeTypeDetector\FileInfo'
+            - '@Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface'
+            - [ '@Ibexa\Core\FieldType\Validator\FileExtensionBlackListValidator' ]
+            - '@?Ibexa\Core\MVC\Symfony\FieldType\BinaryBase\ContentDownloadUrlGenerator'
         tags:
-            - { name: ezpublish.fieldType, alias: enhancedezbinaryfile }
+            - { name: ibexa.field_type, alias: enhancedezbinaryfile }
 
     ezpublish.fieldType.enhancedezbinaryfile.storage_gateway:
-        class: eZ\Publish\Core\FieldType\BinaryFile\BinaryFileStorage\Gateway\LegacyStorage
+        class: Ibexa\Core\FieldType\BinaryFile\BinaryFileStorage\Gateway\DoctrineStorage
         tags:
             - { name: ezpublish.fieldType.externalStorageHandler.gateway, alias: enhancedezbinaryfile, identifier: LegacyStorage }
+
+    ezpublish.enhancedezbinaryfile.external_storage_handler:
+        class: Ibexa\Core\FieldType\BinaryBase\BinaryBaseStorage
+        arguments:
+            - "@ezpublish.fieldType.ezbinaryfile.storage_gateway"
+            - "@ezpublish.fieldType.ezbinaryfile.io_service"
+            - "@ezpublish.fieldType.ezbinaryfile.pathGenerator"
+            - "@ezpublish.core.io.mimeTypeDetector"
+        tags:
+            - { name: ezpublish.fieldType.externalStorageHandler, alias: enhancedezbinaryfile }

@@ -2,10 +2,10 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Tests\Core\FieldType\EnhancedBinaryFile;
 
-use eZ\Publish\Core\FieldType\ValidationError;
-use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
-use eZ\Publish\SPI\IO\MimeTypeDetector;
+use Ibexa\Core\FieldType\ValidationError;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Contracts\Core\IOMimeTypeDetector;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile\Type;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile\Value;
 use PHPUnit\Framework\TestCase;

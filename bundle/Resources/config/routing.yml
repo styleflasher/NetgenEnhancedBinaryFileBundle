@@ -1,5 +1,5 @@
 netgen_enhancedezbinaryfile.route.download_binary_file:
     path: /netgen/enhancedezbinaryfile/download/{infocollectionAttributeId}
-    defaults: { _controller: netgen_enhancedezbinaryfile.controller.download:downloadCollectedEnhancedEzBinaryFileAction }
+    defaults: { _controller: Netgen\Bundle\EnhancedBinaryFileBundle\Controller\DownloadController:downloadCollectedEnhancedEzBinaryFileAction }
     methods: [GET]
 

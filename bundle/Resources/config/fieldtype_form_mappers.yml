@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile\EnhancedBinaryFileFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.definition, fieldType: enhancedezbinaryfile }
+
+    Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile\FieldValueFormMapper:
+        tags:
+            - { name: ibexa.admin_ui.field_type.form.mapper.value, fieldType: enhancedezbinaryfile }
+
+    Netgen\Bundle\EnhancedBinaryFileBundle\Form\Type\EnhancedBinaryFileFieldType:
+        tags:
+            - { name: 'form.type' }
