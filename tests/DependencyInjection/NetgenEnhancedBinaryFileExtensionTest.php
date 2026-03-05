@@ -12,14 +12,14 @@ class NetgenEnhancedBinaryFileExtensionTest extends AbstractExtensionTestCase
         $this->load();
     }
 
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
         return [
             new NetgenEnhancedBinaryFileExtension(),
         ];
     }
 
-    protected function getMinimalConfiguration()
+    protected function getMinimalConfiguration(): array
     {
         return [];
     }

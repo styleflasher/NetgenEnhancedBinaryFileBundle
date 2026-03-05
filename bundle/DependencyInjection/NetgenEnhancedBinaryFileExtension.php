@@ -2,14 +2,13 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\DependencyInjection;
 
-use ReflectionClass;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Netgen\Bundle\EnhancedBinaryFileBundle\NetgenEnhancedBinaryFileBundle;
+use ReflectionClass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Yaml;
 
@@ -24,7 +23,7 @@ class NetgenEnhancedBinaryFileExtension extends Extension implements PrependExte
     public function prepend(ContainerBuilder $container)
     {
         $refl = new ReflectionClass(NetgenEnhancedBinaryFileBundle::class);
-        $path = \dirname($refl->getFileName()).'/Resources/views';
+        $path = \dirname($refl->getFileName()) . '/Resources/views';
 
         $container->prependExtensionConfig('twig', ['paths' => [
             $path => 'NetgenEnhancedBinaryFileBundle'
@@ -51,7 +50,6 @@ class NetgenEnhancedBinaryFileExtension extends Extension implements PrependExte
 
         $loader->load('fieldtype_form_mappers.yml');
         $loader->load('fieldtypes.yml');
-        $loader->load('field_type_handlers.yml');
         $loader->load('storage_engines.yml');
         $loader->load('mime.yml');
         $loader->load('information_collection.yml');

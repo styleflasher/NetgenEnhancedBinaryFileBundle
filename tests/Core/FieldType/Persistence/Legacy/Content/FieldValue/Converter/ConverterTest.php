@@ -2,12 +2,12 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Tests\Core\FieldType\Persistence\Legacy\Content\FieldValue\Converter;
 
-use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
-use Ibexa\Core\Persistence\Legacy\Content\StorageFieldDefinition;
-use Ibexa\Core\Persistence\Legacy\Content\StorageFieldValue;
 use Ibexa\Contracts\Core\Persistence\Content\FieldTypeConstraints;
 use Ibexa\Contracts\Core\Persistence\Content\FieldValue;
 use Ibexa\Contracts\Core\Persistence\Content\Type\FieldDefinition;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\Persistence\Legacy\Content\StorageFieldDefinition;
+use Ibexa\Core\Persistence\Legacy\Content\StorageFieldValue;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Core\Persistence\Legacy\Content\FieldValue\Converter\Converter;
 use PHPUnit\Framework\TestCase;
 
@@ -23,10 +23,10 @@ class ConverterTest extends TestCase
      */
     protected $configResolver;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->configResolver = $this->createMock(ConfigResolverInterface::class);
-        $this->converter = new Converter($this->configResolver);
+        $this->converter = new Converter();
     }
 
     public function testInstanceOfConverterInterface()
@@ -34,20 +34,24 @@ class ConverterTest extends TestCase
         $this->assertInstanceOf(\Ibexa\Core\Persistence\Legacy\Content\FieldValue\Converter::class, $this->converter);
     }
 
-    public function testToStorageValueShouldDoNothing()
+    public function testToStorageValue()
     {
-        $this->converter->toStorageValue(
-            $this->createMock(FieldValue::class),
-            $this->createMock(StorageFieldValue::class)
-        );
+        $fieldValue = $this->createMock(FieldValue::class);
+        $fieldValue->data = 'some value';
+        $storage = new StorageFieldValue();
+
+        $this->converter->toStorageValue($fieldValue, $storage);
+        $this->assertEquals('some value', $storage->dataText);
     }
 
-    public function testToFieldValueShouldDoNothing()
+    public function testToFieldValue()
     {
-        $this->converter->toFieldValue(
-            $this->createMock(StorageFieldValue::class),
-            $this->createMock(FieldValue::class)
-        );
+        $storage = new StorageFieldValue();
+        $storage->dataText = 'some value';
+        $fieldValue = $this->createMock(FieldValue::class);
+
+        $this->converter->toFieldValue($storage, $fieldValue);
+        $this->assertEquals('some value', $fieldValue->data);
     }
 
     public function testGetIndexColumnShouldReturnFalse()
@@ -57,7 +61,8 @@ class ConverterTest extends TestCase
 
     public function testToStorageFieldDefinitionWithoutConstraints()
     {
-        $fieldDefinition = new FieldDefinition();
+        $fieldDefinition = $this->createMock(FieldDefinition::class);
+        $fieldDefinition->fieldTypeConstraints = new FieldTypeConstraints();
         $storage = new StorageFieldDefinition();
         $this->converter->toStorageFieldDefinition($fieldDefinition, $storage);
 
@@ -67,7 +72,8 @@ class ConverterTest extends TestCase
 
     public function testToStorageFieldDefinition()
     {
-        $fieldDefinition = new FieldDefinition();
+        $fieldDefinition = $this->createMock(FieldDefinition::class);
+        $fieldDefinition->fieldTypeConstraints = new FieldTypeConstraints();
         $fieldDefinition->fieldTypeConstraints->validators = [
             'FileSizeValidator' => [
                 'maxFileSize' => 14,
@@ -87,7 +93,7 @@ class ConverterTest extends TestCase
 
     public function testToFieldDefinition()
     {
-        $fieldDefinition = new FieldDefinition();
+        $fieldDefinition = $this->createMock(FieldDefinition::class);
         $storage = new StorageFieldDefinition();
 
         $this->converter->toFieldDefinition($storage, $fieldDefinition);
@@ -99,7 +105,7 @@ class ConverterTest extends TestCase
 
     public function testToFieldDefinitionWithValidator()
     {
-        $fieldDefinition = new FieldDefinition();
+        $fieldDefinition = $this->createMock(FieldDefinition::class);
         $storage = new StorageFieldDefinition();
         $storage->dataInt1 = 55;
         $storage->dataText1 = 'text/plain';

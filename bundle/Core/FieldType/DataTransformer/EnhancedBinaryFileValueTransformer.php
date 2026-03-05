@@ -14,7 +14,7 @@ class EnhancedBinaryFileValueTransformer extends AbstractBinaryBaseTransformer i
      * @param Value|null $initialValue
      * @param string $valueClass
      */
-    public function __construct(FieldType $fieldType, ?Value $initialValue, $valueClass)
+    public function __construct(FieldType $fieldType, Value $initialValue, $valueClass)
     {
         parent::__construct($fieldType, $initialValue, $valueClass);
     }
@@ -34,7 +34,7 @@ class EnhancedBinaryFileValueTransformer extends AbstractBinaryBaseTransformer i
     public function reverseTransform(mixed $value): ?Value
     {
         if (null === $value['file']) {
-            return null;
+            return $this->fieldType->getEmptyValue();
         }
 
         /** @var \Ibexa\Core\FieldType\BinaryFile\Value */

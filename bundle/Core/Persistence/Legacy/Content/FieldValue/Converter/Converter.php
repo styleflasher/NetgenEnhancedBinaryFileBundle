@@ -2,13 +2,13 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Core\Persistence\Legacy\Content\FieldValue\Converter;
 
+use Ibexa\Contracts\Core\Persistence\Content\FieldTypeConstraints;
+use Ibexa\Contracts\Core\Persistence\Content\FieldValue;
+use Ibexa\Contracts\Core\Persistence\Content\Type\FieldDefinition;
 use Ibexa\Core\FieldType\FieldSettings;
 use Ibexa\Core\Persistence\Legacy\Content\FieldValue\Converter as ConverterInterface;
 use Ibexa\Core\Persistence\Legacy\Content\StorageFieldDefinition;
 use Ibexa\Core\Persistence\Legacy\Content\StorageFieldValue;
-use Ibexa\Contracts\Core\Persistence\Content\FieldTypeConstraints;
-use Ibexa\Contracts\Core\Persistence\Content\FieldValue;
-use Ibexa\Contracts\Core\Persistence\Content\Type\FieldDefinition;
 
 class Converter implements ConverterInterface
 {
@@ -20,6 +20,7 @@ class Converter implements ConverterInterface
      */
     public function toStorageValue(FieldValue $value, StorageFieldValue $storageFieldValue)
     {
+        $storageFieldValue->dataText = $value->data;
     }
 
     /**
@@ -30,6 +31,7 @@ class Converter implements ConverterInterface
      */
     public function toFieldValue(StorageFieldValue $value, FieldValue $fieldValue)
     {
+        $fieldValue->data = $value->dataText;
     }
 
     /**

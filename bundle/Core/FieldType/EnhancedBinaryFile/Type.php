@@ -10,15 +10,15 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile;
 
-use Ibexa\Contracts\Core\Repository\Exceptions\InvalidArgumentException;
 use Ibexa\Contracts\Core\FieldType\BinaryBase\RouteAwarePathGenerator;
+use Ibexa\Contracts\Core\FieldType\Value as SPIValue;
 use Ibexa\Contracts\Core\IO\MimeTypeDetector;
+use Ibexa\Contracts\Core\IOMimeTypeDetector;
+use Ibexa\Contracts\Core\Repository\Exceptions\InvalidArgumentException;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
+use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Ibexa\Core\FieldType\BinaryFile\Type as BinaryFileType;
 use Ibexa\Core\FieldType\ValidationError;
-use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
-use Ibexa\Contracts\Core\FieldType\Value as SPIValue;
-use Ibexa\Contracts\Core\IOMimeTypeDetector;
 
 class Type extends BinaryFileType
 {
@@ -83,9 +83,9 @@ class Type extends BinaryFileType
      * @param FieldDefinition $fieldDefinition The field definition of the field
      * @param \Ibexa\Core\FieldType\BinaryBase\Value $fieldValue The field value for which an action is performed
      *
+     * @return \Ibexa\Contracts\Core\FieldType\ValidationError[]
      * @throws InvalidArgumentException
      *
-     * @return \Ibexa\Contracts\Core\FieldType\ValidationError[]
      */
     public function validate(FieldDefinition $fieldDefinition, SPIValue $fieldValue)
     {
@@ -96,15 +96,31 @@ class Type extends BinaryFileType
         }
 
         $fieldSettings = $fieldDefinition->getFieldSettings();
-        $allowedExtensions = explode('|', $fieldSettings['allowedTypes']);
+        $allowedTypesSetting = $fieldSettings['allowedTypes'] ?? null;
+
+        if (empty($allowedTypesSetting)) {
+            return parent::validate($fieldDefinition, $fieldValue);
+        }
+
+        $allowedExtensions = explode('|', (string)$allowedTypesSetting);
 
         $mimeType = $this->mimeTypeDetector->getFromPath($fieldValue->inputUri);
+
+        if ($mimeType === null) {
+            return [
+                new ValidationError(
+                    'Could not detect mimeType of the file.',
+                    null,
+                    []
+                ),
+            ];
+        }
 
         foreach ($allowedExtensions as $allowedExtension) {
             if ($this->configResolver->hasParameter("{$allowedExtension}.Types", 'mime')) {
                 $allowedMimeTypes = $this->configResolver->getParameter("{$allowedExtension}.Types", 'mime');
 
-                if (in_array($mimeType, $allowedMimeTypes, true)) {
+                if (is_array($allowedMimeTypes) && in_array($mimeType, $allowedMimeTypes, true)) {
                     return parent::validate($fieldDefinition, $fieldValue);
                 }
             }

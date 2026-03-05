@@ -2,10 +2,10 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\Tests\Core\FieldType\EnhancedBinaryFile;
 
-use Ibexa\Core\FieldType\ValidationError;
+use Ibexa\Contracts\Core\IO\MimeTypeDetector;
 use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
+use Ibexa\Core\FieldType\ValidationError;
 use Ibexa\Core\Repository\Values\ContentType\FieldDefinition;
-use Ibexa\Contracts\Core\IOMimeTypeDetector;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile\Type;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile\Value;
 use PHPUnit\Framework\TestCase;
@@ -32,12 +32,11 @@ class TypeTest extends TestCase
      */
     protected $file;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->file = __DIR__ . '/test.txt';
         $this->mimeTypeDetector = $this->createMock(MimeTypeDetector::class);
         $this->configResolver = $this->createMock(ConfigResolverInterface::class);
-        $this->type = new Type($this->mimeTypeDetector, $this->configResolver);
+        $this->type = new Type($this->mimeTypeDetector, $this->configResolver, []);
     }
 
     public function testGetEmptyValue()
@@ -59,12 +58,12 @@ class TypeTest extends TestCase
         ]);
 
         $value = new Value([
-            'path' => $this->file,
+            'inputUri' => 'test.txt',
         ]);
 
         $this->mimeTypeDetector->expects($this->once())
             ->method('getFromPath')
-            ->with($this->file)
+            ->with('test.txt')
             ->willReturn('text/plain');
 
         $expected = [
@@ -100,12 +99,12 @@ class TypeTest extends TestCase
         ]);
 
         $value = new Value([
-            'path' => $this->file,
+            'inputUri' => 'test.txt',
         ]);
 
         $this->mimeTypeDetector->expects($this->once())
             ->method('getFromPath')
-            ->with($this->file)
+            ->with('test.txt')
             ->willReturn('text/plain');
 
         $this->configResolver->expects($this->exactly(3))
@@ -137,12 +136,12 @@ class TypeTest extends TestCase
         ]);
 
         $value = new Value([
-            'path' => $this->file,
+            'inputUri' => 'test.txt',
         ]);
 
         $this->mimeTypeDetector->expects($this->once())
             ->method('getFromPath')
-            ->with($this->file)
+            ->with('test.txt')
             ->willReturn('text/plain');
 
         $this->configResolver->expects($this->exactly(3))
@@ -168,14 +167,14 @@ class TypeTest extends TestCase
     public function testValidateFieldSettingsWithEmptyArray()
     {
         $result = $this->type->validateFieldSettings([]);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertEmpty($result);
     }
 
     public function testValidateFieldSettingsWithBool()
     {
         $result = $this->type->validateFieldSettings(false);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(new ValidationError('Field settings must be in form of an array'), $result[0]);
     }
@@ -187,7 +186,7 @@ class TypeTest extends TestCase
             'some_settings' => [],
         ];
         $result = $this->type->validateFieldSettings($fieldSettings);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertEquals(
             new ValidationError(

@@ -2,11 +2,11 @@
 
 namespace Netgen\Bundle\EnhancedBinaryFileBundle\FieldHandler;
 
-use Ibexa\Core\IO\Values\BinaryFile;
 use DOMDocument;
 use Ibexa\Contracts\Core\Repository\Values\ContentType\FieldDefinition;
 use Ibexa\Core\FieldType\Value;
 use Ibexa\Core\IO\IOServiceInterface;
+use Ibexa\Core\IO\Values\BinaryFile;
 use Netgen\Bundle\EnhancedBinaryFileBundle\Core\FieldType\EnhancedBinaryFile\Value as EnhancedBinaryFileValue;
 use Netgen\InformationCollection\API\FieldHandler\CustomLegacyFieldHandlerInterface;
 use Netgen\InformationCollection\API\Value\Legacy\FieldValue as LegacyData;
@@ -41,7 +41,7 @@ class EnhancedBinaryFileHandler implements CustomLegacyFieldHandlerInterface
      */
     public function toString(Value $value, FieldDefinition $fieldDefinition): string
     {
-        return (string) $value;
+        return (string)$value;
     }
 
     /**
@@ -49,8 +49,12 @@ class EnhancedBinaryFileHandler implements CustomLegacyFieldHandlerInterface
      */
     public function getLegacyValue(Value $value, FieldDefinition $fieldDefinition): LegacyData
     {
+        if ($value->inputUri === null) {
+            return new LegacyData($fieldDefinition->getId(), '');
+        }
+
         return new LegacyData(
-            $fieldDefinition->id,
+            $fieldDefinition->getId(),
             $this->store($value, $fieldDefinition)
         );
     }
@@ -106,7 +110,7 @@ class EnhancedBinaryFileHandler implements CustomLegacyFieldHandlerInterface
         $encodedFilename = uniqid();
         $binaryCreateStruct->id = $storagePrefix . $encodedFilename;
 
-        $this->ioService->setPrefix(null); // do not put the file into 'images' subfolder.
+        $this->ioService->setPrefix(''); // do not put the file into 'images' subfolder.
 
         $binaryFile = $this->ioService->createBinaryFile($binaryCreateStruct);
 
