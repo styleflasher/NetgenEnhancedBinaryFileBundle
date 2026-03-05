@@ -1,0 +1,16 @@
+{% extends '@!NetgenInformationCollection/admin/content_fields.html.twig' %}
+
+{% block enhancedezbinaryfile_field %}
+    {% apply spaceless %}
+        {% set field_value = attribute.value %}
+        {% if field_value.dataText is not empty %}
+            {% set xml_content = field_value.dataText %}
+            <a href="{{ path('netgen_enhancedezbinaryfile.route.download_binary_file', {'infocollectionAttributeId': attribute.id}) }}"
+               target="_blank">
+                {{ 'netgen_enhanced_binary_file_admin_download'|trans({}, 'netgen_enhanced_binary_file') }}
+            </a>
+        {% else %}
+            --
+        {% endif %}
+    {% endapply %}
+{% endblock %}

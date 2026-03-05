@@ -26,7 +26,8 @@ class NetgenEnhancedBinaryFileExtension extends Extension implements PrependExte
         $path = \dirname($refl->getFileName()) . '/Resources/views';
 
         $container->prependExtensionConfig('twig', ['paths' => [
-            $path => 'NetgenEnhancedBinaryFileBundle'
+            $path => 'NetgenEnhancedBinaryFileBundle',
+            $path => 'NetgenInformationCollection'
         ]]);
 
         $fileName = 'ez_field_templates.yml';

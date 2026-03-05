@@ -107,7 +107,7 @@ class DownloadController extends Controller
 
         $originalFilename = html_entity_decode($originalFilenameNodes && $originalFilenameNodes->length ? $originalFilenameNodes->item(0)->textContent : $fileName);
 
-        $this->ioService->setPrefix(null);
+        $this->ioService->setPrefix('');
         $binaryFile = $this->ioService->loadBinaryFile('original' . \DIRECTORY_SEPARATOR . 'collected' . \DIRECTORY_SEPARATOR . $fileName);
 
         $response = new BinaryStreamResponse($binaryFile, $this->ioService);
